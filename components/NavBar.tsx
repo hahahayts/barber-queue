@@ -1,4 +1,5 @@
 import { SignedIn, SignedOut, SignUpButton, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 import React from "react";
 
 const NavBar = () => {
@@ -11,9 +12,9 @@ const NavBar = () => {
           </a>
         </li>
         <li>
-          <a href="#" className="hover:text-blue-200 transition">
+          <Link href="/services" className="hover:text-blue-200 transition">
             Services
-          </a>
+          </Link>
         </li>
         <li>
           <SignedOut>

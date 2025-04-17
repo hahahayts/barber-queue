@@ -1,16 +1,13 @@
 import { getAllQueue } from "@/actions/query";
 import { Queue } from "@prisma/client";
-import Button from "../_components/Button";
+import { AddButton, FinishButton } from "../_components/Button";
 import { currentUser } from "@clerk/nextjs/server";
 
 export default async function BarberQueue() {
-  // const [queue, setQueue] = useState([
-  //   { id: 1, name: "James Wilson", time: "10:00 AM", estimated: "10:15 AM" },
-  //   { id: 2, name: "Maria Garcia", time: "10:10 AM", estimated: "10:30 AM" },
-  //   { id: 3, name: "Robert Chen", time: "10:15 AM", estimated: "10:45 AM" },
-  // ]);
   const queue: Queue[] = await getAllQueue();
   const user = await currentUser();
+
+  console.log(user);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col">
@@ -87,6 +84,11 @@ export default async function BarberQueue() {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {person.estimated_time.toLocaleTimeString()}
                         </td>
+                        {user?.publicMetadata.role === "admin" && (
+                          <td>
+                            <FinishButton id={person.id} />
+                          </td>
+                        )}
                       </tr>
                     ))}
                   </tbody>
@@ -104,7 +106,11 @@ export default async function BarberQueue() {
           </div>
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-end  mt-10">
-            <Button label="Join the Queue" name={user?.fullName} />
+            <AddButton
+              label="Join the Queue"
+              id={user?.id}
+              name={user?.fullName}
+            />
           </div>
         </div>
       </main>

@@ -3,6 +3,7 @@ export interface ChildrenProps {
 }
 
 export interface AddQueueProps {
+  id: string;
   label: string;
   name: string;
 }

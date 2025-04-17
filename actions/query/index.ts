@@ -12,3 +12,13 @@ export const getAllQueue = async () => {
     return [];
   }
 };
+
+export const existingUser = async (name: string) => {
+  const existing = await prisma.queue.findFirst({
+    where: {
+      name,
+    },
+  });
+
+  return existing;
+};
